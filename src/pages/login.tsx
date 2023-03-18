@@ -5,15 +5,16 @@ import Input from '../components/input/input'
 
 export default function LoginPage(){
     return(
-        <div className={styles.background}>
-            <LoginCard title="Deixa baixo">
+        <main className={styles.background}>
+            <LoginCard>
                 <div className={styles.container}>
-                    <form className={styles.form}>
+                    <div className={styles.form}>
+                        <h2 className={styles.title}>Deixa baixo</h2>
                         <Input type="text" placeholder="Nome de Usuário"/>
                         <Input type="password" placeholder="Senha"/>
-                    </form>
+                    </div>
                 </div>
             </LoginCard>
-        </div>
+        </main>
     )
 }
