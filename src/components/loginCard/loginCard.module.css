@@ -1,0 +1,14 @@
+.card{
+    background-color: #1E2020;
+    width: 40em;
+    height: 58em;
+    border-radius: 5px;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.title{
+    text-align: center;
+    padding: 20px;
+}

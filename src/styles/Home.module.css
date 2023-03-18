@@ -1,0 +1,21 @@
+.background{
+  background-color: azure;
+  color: black;
+  text-align: center;
+  padding: 20px 30px;
+}
+
+.button{
+  background-color: #299370;
+  padding: 10px;
+  border: 0;
+  border-radius: 10px;
+  text-align: right;
+  display: inline;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.container{
+  text-align: right;
+}

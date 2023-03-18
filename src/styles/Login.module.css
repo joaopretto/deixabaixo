@@ -1,0 +1,14 @@
+.background{
+    background-color: white;
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    color: white;
+}
+
+.form{
+    display:flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 350px;
+}
