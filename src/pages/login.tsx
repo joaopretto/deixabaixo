@@ -13,7 +13,7 @@ export default function LoginPage(){
             <LoginCard>
                 <div className={styles.container_img}>
                     <Link href='/'>
-                        <Image className={styles.logo} src={MyLogo} alt="Logo" width={200} height={200}/>
+                        <Image className={styles.logo} src={MyLogo} alt="Logo"/>
                     </Link>
                 </div>
                 <div className={styles.container}>
@@ -24,7 +24,7 @@ export default function LoginPage(){
                         <Button>Entrar</Button>
                     </div>
                 </div>
-                <p className={styles.p}>Não possui uma conta? <Link href="/"><span className={styles.span}>Cadastre-se</span></Link></p>
+                <p className={styles.p}>Não possui uma conta? <Link href="/cadastro"><span className={styles.span}>Cadastre-se</span></Link></p>
             </LoginCard>
         </main>
     )

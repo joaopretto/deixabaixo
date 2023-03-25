@@ -20,7 +20,7 @@
 .title{
     display: block;
     text-align: center;
-    padding: 20px;
+    padding-top: 5em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
@@ -35,13 +35,13 @@
 .container_img{
     position: absolute;
     top:0;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 .p{
     position: absolute;
     bottom: 0;
-    padding-bottom: 11em;
+    padding-bottom: 5em;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
 }
