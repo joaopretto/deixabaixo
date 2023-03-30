@@ -14,13 +14,12 @@
     gap: 25px;
     width: 350px;
     align-items: center;
-    justify-content: center;
 }
 
 .title{
     display: block;
     text-align: center;
-    padding-top: 5em;
+    padding-top: 1em;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
@@ -33,15 +32,11 @@
 }
 
 .container_img{
-    position: absolute;
-    top:0;
     padding-top: 20px;
 }
 
 .p{
-    position: absolute;
-    bottom: 0;
-    padding-bottom: 5em;
+    padding-top: 70px;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
 }

@@ -23,14 +23,14 @@ export default function RegisterPage(){
                         <Input type="text" placeholder="Seu E-mail"/>
                         <Input type="password" placeholder="Senha"/>
                         <Input type="password" placeholder="Confirmar senha"/>
-                        <Button>Cadastrar</Button>
+                        <Button type='submit'>Cadastrar</Button>
                     </div>
                 </div>
                 <p className={styles.p}>
                     <Link href="/login">
                         <span className={styles.span}>Já possui uma conta?</span>
                     </Link>
-                </p> 
+                </p>
             </CadastroCard>
         </main>
     )
