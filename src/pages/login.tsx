@@ -29,7 +29,7 @@ export default function LoginPage(){
         if(email && password){
             const isLogged = await auth.signin(email, password);
             if(isLogged){
-                Router.push("/");
+                Router.push("/homeLogin");
             }else{
                 alert("Não deu certo");
             }
@@ -48,7 +48,7 @@ export default function LoginPage(){
                     <div className={styles.form}>
                         <Input value={email} onChange={handleEmailInput} type="text" placeholder="Nome de Usuário"/>
                         <Input value={password} onChange={handlePasswordInput} type="password" placeholder="Senha"/>
-                        <Button type='submit' onClick={handleLogin}>
+                        <Button type='button' onClick={handleLogin}>
                            Entrar
                         </Button>
                     </div>

@@ -7,4 +7,12 @@ export type AuthContextType = {
     signout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType>(null!);
+export const AuthContext = createContext<AuthContextType>({
+    user: {
+        id: 1,
+        name: "Test",
+        email: "test@test.com",
+    },
+    signin: (email, password) => Promise.resolve(true),
+    signout: () => {},
+});
