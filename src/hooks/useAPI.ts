@@ -23,13 +23,14 @@ export const useApi = () => ({
             JSON.stringify({ id: 3, name: "João", email: "joao@gmail.com" })
           );
     }
-
     return {
       user: { id: 3, name: "João", email: "joao@gmail.com" },
       token: "123456789",
     };
-    const response = await api.post("/signin", { email, password });
-    return response.data;
+    const response = await api.post("/signin", { email, password }).then((response) => {
+    const {authenticated, principal} = response.data;
+    });
+    
   },
   logout: async () => {
     if(typeof localStorage !== "undefined"){

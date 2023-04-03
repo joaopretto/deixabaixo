@@ -29,7 +29,7 @@ export default function LoginPage(){
         if(email && password){
             const isLogged = await auth.signin(email, password);
             if(isLogged){
-                Router.push("/homeLogin");
+                Router.push("/");
             }else{
                 alert("Não deu certo");
             }
@@ -55,7 +55,7 @@ export default function LoginPage(){
                 </div>
                 <p className={styles.p}>Não possui uma conta? 
                     <Link href="/cadastro">
-                        <span className={styles.span}>Cadastre-se</span>
+                        <span className={styles.span}> Cadastre-se</span>
                     </Link>
                 </p>
             </LoginCard>
