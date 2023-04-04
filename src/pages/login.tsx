@@ -14,7 +14,7 @@ export default function LoginPage(){
     const { signin } = useContext(AuthContext)
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [senha, setPassword] = useState('');
 
     const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
         setEmail(e.target.value);
@@ -29,7 +29,7 @@ export default function LoginPage(){
 
         const data = {
             email,
-            password
+            senha
         };
 
         await signin(data);
@@ -46,7 +46,7 @@ export default function LoginPage(){
                 <div className={styles.container}>
                     <div className={styles.form}>
                         <Input value={email} onChange={handleEmailInput} type="text" placeholder="Nome de Usuário"/>
-                        <Input value={password} onChange={handlePasswordInput} type="password" placeholder="Senha"/>
+                        <Input value={senha} onChange={handlePasswordInput} type="password" placeholder="Senha"/>
                         <Button type='button' onClick={handleLogin}>
                            Entrar
                         </Button>

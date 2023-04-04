@@ -19,7 +19,7 @@ export default function Home() {
       <div className={styles.container}>
         {user ? (
           <>
-            <span>{user.name}</span>
+            <span>{user.email}</span>
             <button type='button' className={styles.button} onClick={handleLogout}>
               Sair
             </button>

@@ -1,13 +1,18 @@
-import { User } from "@/types/user";
 import { createContext } from "react";
 
 type SignInCredentials = {
     email: string;
-    password: string;
+    senha: string;
   }
 
+type User = {
+  email: string;
+}
+
 export type AuthContextType = {
-    signin: ({email, password}: SignInCredentials) => void;
+    signin: ({email, senha}: SignInCredentials) => void;
+    user?: User;
+    signout: () => {}
 }
 
 export const AuthContext = createContext({} as AuthContextType);
