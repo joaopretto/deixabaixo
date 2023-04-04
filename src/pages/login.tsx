@@ -6,13 +6,12 @@ import Image from 'next/image'
 import MyLogo from '../../public/images/DeixaBaixo_logo.png'
 import Link from 'next/link'
 import Button from '../components/button/button'
-import { useContext, useState } from 'react'
+import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
-import Router from 'next/router';
 
 export default function LoginPage(){
 
-    const auth = useContext(AuthContext);
+    const { signin } = useContext(AuthContext)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -25,15 +24,15 @@ export default function LoginPage(){
         setPassword(e.target.value);
     }
 
-    const handleLogin = async () => {
-        if(email && password){
-            const isLogged = await auth.signin(email, password);
-            if(isLogged){
-                Router.push("/");
-            }else{
-                alert("Não deu certo");
-            }
-        }
+    async function handleLogin(event: FormEvent) {
+        event.preventDefault();
+
+        const data = {
+            email,
+            password
+        };
+
+        await signin(data);
     }
 
     return(

@@ -1,27 +1,45 @@
-import { useEffect, useState } from "react";
-import { User } from "@/types/user";
+import { ReactNode, useEffect } from "react";
+import { api } from "../../services/apiClient"
 import { AuthContext } from "./AuthContext";
-import { useApi } from "@/hooks/useAPI";
+import Router from "next/router"
 
-export const AuthProvider = ({ children }: { children: JSX.Element }) => {
-  const api = useApi();
-  const user = api.getUSer();
+type SignInCredentials = {
+  email: string;
+  password: string;
+}
 
-  const signin = async (email: string, password: string) => {
-    const data = await api.signin(email, password);
-    if (data.user && data.token) {
-      return true;
-    }
-    return false;
-  };
+type AuthProviderProps = {
+  children: ReactNode;
+}
 
-  const signout = async () => {
-    await api.logout();
-  };
+export function AuthProvider({ children }: AuthProviderProps) {
+  
+  async function signin({email, password}: SignInCredentials)  {
+    try {
+      const response = await api.post("/signin", {
+        email,
+        password
+      });
+
+      console.log(response);
+
+      const { authenticated, principal } = response.data;
+
+      if(typeof localStorage !== "undefined"){
+        localStorage.setItem(
+            authenticated,
+            principal
+          );
+      }
+
+      Router.push("/");
+      
+    } catch {}
+  }
 
   return (
-    <AuthContext.Provider value={{ user, signin, signout }}>
+    <AuthContext.Provider value={{ signin }}>
       {children}
     </AuthContext.Provider>
-  );
-};
+  )
+}
