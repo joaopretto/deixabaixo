@@ -45,7 +45,7 @@ export default function LoginPage(){
                 </div>
                 <div className={styles.container}>
                     <div className={styles.form}>
-                        <Input value={email} onChange={handleEmailInput} type="text" placeholder="Nome de Usuário"/>
+                        <Input value={email} onChange={handleEmailInput} type="email" placeholder="Email do Usuário"/>
                         <Input value={senha} onChange={handlePasswordInput} type="password" placeholder="Senha"/>
                         <Button type='button' onClick={handleLogin}>
                            Entrar
