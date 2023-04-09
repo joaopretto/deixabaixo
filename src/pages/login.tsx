@@ -1,11 +1,9 @@
 import styles from '../styles/Login.module.css'
 
 import LoginCard from '../components/loginCard/loginCard'
-import Input from '../components/input/input'
 import Image from 'next/image'
 import MyLogo from '../../public/images/DeixaBaixo_logo.png'
 import Link from 'next/link'
-import Button from '../components/button/button'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
 
@@ -15,13 +13,32 @@ export default function LoginPage(){
 
     const [email, setEmail] = useState('');
     const [senha, setPassword] = useState('');
-
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
+    
     const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        setEmail(e.target.value);
+        const maxLenght = 50;
+        const inputValue = e.target.value;
+
+        if(inputValue.length <= maxLenght){
+            setEmail(inputValue);
+            const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            setIsValidEmail(regex.test(inputValue));
+        }else{
+            setEmail(inputValue.slice(0, maxLenght));
+            setIsValidEmail(false);
+        }
     }
 
     const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        setPassword(e.target.value);
+        const maxLenght = 12;
+        const inputValue = e.target.value;
+        if(inputValue.length <= maxLenght){
+            setPassword(inputValue);
+        }else{
+            setPassword(inputValue.slice(0, maxLenght));
+            setIsValidPassword(false);
+        }
     }
 
     async function handleLogin(event: FormEvent) {
@@ -45,11 +62,26 @@ export default function LoginPage(){
                 </div>
                 <div className={styles.container}>
                     <div className={styles.form}>
-                        <Input value={email} onChange={handleEmailInput} type="email" placeholder="Email do Usuário"/>
-                        <Input value={senha} onChange={handlePasswordInput} type="password" placeholder="Senha"/>
-                        <Button type='button' onClick={handleLogin}>
+
+                        <input 
+                            className={!isValidEmail && email.length > 0 ? 'invalid' : '' || isValidEmail && email.length > 0 ? 'valid' : ''} 
+                            value={email} 
+                            onChange={handleEmailInput} 
+                            type="email" 
+                            placeholder="Email do Usuário"
+                        />
+
+                        <input
+                            className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''}
+                            value={senha} 
+                            onChange={handlePasswordInput} 
+                            type="password" 
+                            placeholder="Senha"
+                        />
+
+                        <button type='button' onClick={handleLogin}>
                            Entrar
-                        </Button>
+                        </button>
                     </div>
                 </div>
                 <p className={styles.p}>Não possui uma conta? 

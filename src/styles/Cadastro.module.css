@@ -1,7 +1,10 @@
 .background{
-    background-color: black;
-    background-image: url(../../public/plano_de_fundo.jpg);
+    background-color: rgba(0,0,0,0.2);
+    background-image: url(../../public/bauru.jpg);
+    background-blend-mode: multiply;
     background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: left;
     justify-content: left;
@@ -14,6 +17,24 @@
     gap: 25px;
     width: 350px;
     align-items: center;
+}
+
+@media screen and (max-width: 600px){
+    .form{
+        width: 100%;
+        height: 100%;
+        padding: 20px;
+    }
+
+    .form input[type="text"],
+    .form input[type="email"],
+    .form input[type="password"]{
+        width: 100%;
+    }
+
+    .form button[type="button"]{
+        width: 100%;
+    }
 }
 
 .title{
@@ -31,6 +52,15 @@
     margin: 0 auto;
 }
 
+@media screen and (max-width: 600px){
+    .logo{
+        width: 100%;
+        max-width: 150px;
+        height: auto;
+        max-height: 200px;
+    }
+}
+
 .container_img{
     padding-top: 20px;
 }
@@ -39,6 +69,13 @@
     padding-top: 70px;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 600px){
+    .p{
+        font-size: 16px;
+        padding: 20px;
+    }
 }
 
 .span{
