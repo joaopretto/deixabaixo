@@ -6,6 +6,7 @@ import MyLogo from '../../public/images/DeixaBaixo_logo.png'
 import Link from 'next/link'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
+import {message} from "antd"; 
 
 export default function RegisterPage(){
 
@@ -19,6 +20,7 @@ export default function RegisterPage(){
     const [isValidName, setIsValidName] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
     const [isConfirmPassword, setIsConfirmPassword] = useState(false);
+    const [isInfoVisible, setIsInfoVisible] = useState(false);
 
     const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const maxLenght = 50;
@@ -49,12 +51,13 @@ export default function RegisterPage(){
     }
 
     const handleSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const maxLenght = 8;
+        const minLenght = 8;
+        const maxLenght = 15;
         const inputValue = e.target.value;
 
-        if(inputValue.length <= maxLenght){
+        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
             setSenha(inputValue);
-            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
             setIsValidPassword(regex.test(inputValue));
         }else{
             setSenha(inputValue.slice(0, maxLenght));
@@ -62,13 +65,18 @@ export default function RegisterPage(){
         }
     }
 
+    const handleInfoButtonClick = () => {
+        setIsInfoVisible(!isInfoVisible);
+    };
+
     const handleConfirmSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const maxLenght = 8;
+        const minLenght = 8;
+        const maxLenght = 15;
         const inputValue = e.target.value;
 
-        if(inputValue.length <= maxLenght){
+        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
             setConfirmarSenha(inputValue);
-            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
             setIsConfirmPassword(regex.test(inputValue));
         }else{
             setConfirmarSenha(inputValue.slice(0, maxLenght));
@@ -88,6 +96,7 @@ export default function RegisterPage(){
             senha
         };
         await register(data);
+        message.success("Usuário cadastrado com sucesso!");
     }
 
     return(
@@ -124,6 +133,16 @@ export default function RegisterPage(){
                             type="password" 
                             placeholder="Senha"
                         />
+                        <span className={styles.showInfo} onClick={handleInfoButtonClick}>Exibir informações</span>
+                        {isInfoVisible && (
+                            <ul className={styles.listInfo}>
+                                <li>Minimo 8 caracteres</li>
+                                <li>Maximo 15 caracteres</li>
+                                <li>Deve conter um caracter especial</li>
+                                <li>Deve conter uma letra maiuscula</li>
+                                <li>Deve conter um numero</li>
+                            </ul>
+                        )}
 
                         <input
                             className={!isConfirmPassword && confirmarSenha.length > 0 ? 'invalid' : '' || isConfirmPassword && confirmarSenha.length > 0 ? 'valid' : ''}

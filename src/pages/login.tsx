@@ -12,7 +12,7 @@ export default function LoginPage(){
     const { signin } = useContext(AuthContext)
 
     const [email, setEmail] = useState('');
-    const [senha, setPassword] = useState('');
+    const [senha, setSenha] = useState('');
     const [isValidEmail, setIsValidEmail] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
     
@@ -30,13 +30,17 @@ export default function LoginPage(){
         }
     }
 
-    const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const maxLenght = 12;
+    const handleSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
+        const minLenght = 8;
+        const maxLenght = 15;
         const inputValue = e.target.value;
-        if(inputValue.length <= maxLenght){
-            setPassword(inputValue);
+
+        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
+            setSenha(inputValue);
+            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
+            setIsValidPassword(regex.test(inputValue));
         }else{
-            setPassword(inputValue.slice(0, maxLenght));
+            setSenha(inputValue.slice(0, maxLenght));
             setIsValidPassword(false);
         }
     }
@@ -72,9 +76,9 @@ export default function LoginPage(){
                         />
 
                         <input
-                            className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''}
+                            className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''} 
                             value={senha} 
-                            onChange={handlePasswordInput} 
+                            onChange={handleSenhaInput} 
                             type="password" 
                             placeholder="Senha"
                         />

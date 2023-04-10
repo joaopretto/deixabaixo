@@ -84,3 +84,27 @@
 .span:hover{
     text-decoration: underline;
 }
+
+.showInfo{
+    color: #07F9A2;
+    text-decoration: underline;
+    margin: -1em -1em;
+    margin-left: -13em;
+}
+
+@media (max-width: 768px){
+    .showInfo{
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .listInfo {
+      margin-left: 0;
+      padding-left: 1em;
+    }
+  
+    .listInfo li {
+      margin-left: 1em;
+    }
+  }
