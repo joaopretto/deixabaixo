@@ -6,6 +6,7 @@ import MyLogo from '../../public/images/DeixaBaixo_logo.png'
 import Link from 'next/link'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
+import { handleInputChange } from '@/components/handleFunctions/handleFunctions'
 
 export default function LoginPage(){
 
@@ -15,51 +16,16 @@ export default function LoginPage(){
     const [senha, setSenha] = useState('');
     const [isValidEmail, setIsValidEmail] = useState(false);
     const [isValidPassword, setIsValidPassword] = useState(false);
-    
-    const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const maxLenght = 50;
-        const inputValue = e.target.value;
-
-        if(inputValue.length <= maxLenght){
-            setEmail(inputValue);
-            const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            setIsValidEmail(regex.test(inputValue));
-        }else{
-            setEmail(inputValue.slice(0, maxLenght));
-            setIsValidEmail(false);
-        }
-    }
-
-    const handleSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const minLenght = 8;
-        const maxLenght = 15;
-        const inputValue = e.target.value;
-
-        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
-            setSenha(inputValue);
-            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
-            setIsValidPassword(regex.test(inputValue));
-        }else{
-            setSenha(inputValue.slice(0, maxLenght));
-            setIsValidPassword(false);
-        }
-    }
 
     async function handleLogin(event: FormEvent) {
         event.preventDefault();
-
-        const data = {
-            email,
-            senha
-        };
-
-        await signin(data);
+        await signin({email, senha});
     }
 
     return(
         <main className={styles.background}>
             <LoginCard>
-                <div className={styles.container_img}>
+                <div>
                     <Link href='/'>
                         <Image className={styles.logo} src={MyLogo} alt="Logo"/>
                     </Link>
@@ -67,18 +33,18 @@ export default function LoginPage(){
                 <div className={styles.container}>
                     <div className={styles.form}>
 
-                        <input 
-                            className={!isValidEmail && email.length > 0 ? 'invalid' : '' || isValidEmail && email.length > 0 ? 'valid' : ''} 
+                    <input
+                            className={!isValidEmail && email.length > 0 ? 'invalid' : '' || isValidEmail && email.length > 0 ? 'valid' : ''}  
                             value={email} 
-                            onChange={handleEmailInput} 
+                            onChange={(e) => handleInputChange("email", e.target.value, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, setEmail, setIsValidEmail, 50)}  
                             type="email" 
-                            placeholder="Email do Usuário"
+                            placeholder="Seu E-mail"
                         />
 
                         <input
-                            className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''} 
+                            className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''}  
                             value={senha} 
-                            onChange={handleSenhaInput} 
+                            onChange={(e) => handleInputChange("senha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setSenha, setIsValidPassword, 20)}  
                             type="password" 
                             placeholder="Senha"
                         />

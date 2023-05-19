@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
 import {message} from "antd"; 
+import { handleInputChange } from '@/components/handleFunctions/handleFunctions'
 
 export default function RegisterPage(){
 
@@ -22,82 +23,33 @@ export default function RegisterPage(){
     const [isConfirmPassword, setIsConfirmPassword] = useState(false);
     const [isInfoVisible, setIsInfoVisible] = useState(false);
 
-    const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const maxLenght = 50;
-        const inputValue = e.target.value;
-
-        if(inputValue.length <= maxLenght){
-            setEmail(inputValue);
-            const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-            setIsValidEmail(regex.test(inputValue));
-        }else{
-            setEmail(inputValue.slice(0, maxLenght));
-            setIsValidEmail(false);
-        }
-    }
-
-    const handleNomeInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const maxLenght = 30;
-        const inputValue = e.target.value;
-
-        if(inputValue.length <= maxLenght){
-            setNome(inputValue);
-            const regex = /^[a-zA-ZÀ-ÿ']+(([',. -][a-zA-ZÀ-ÿ])?[a-zA-ZÀ-ÿ]*)*$/;
-            setIsValidName(regex.test(inputValue));
-        }else{
-            setNome(inputValue.slice(0, maxLenght));
-            setIsValidName(false);
-        }
-    }
-
-    const handleSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) =>{
-        const minLenght = 8;
-        const maxLenght = 15;
-        const inputValue = e.target.value;
-
-        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
-            setSenha(inputValue);
-            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
-            setIsValidPassword(regex.test(inputValue));
-        }else{
-            setSenha(inputValue.slice(0, maxLenght));
-            setIsValidPassword(false);
-        }
-    }
-
     const handleInfoButtonClick = () => {
         setIsInfoVisible(!isInfoVisible);
     };
 
-    const handleConfirmSenhaInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const minLenght = 8;
-        const maxLenght = 15;
-        const inputValue = e.target.value;
-
-        if(inputValue.length >= minLenght && inputValue.length <= maxLenght){
-            setConfirmarSenha(inputValue);
-            const regex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
-            setIsConfirmPassword(regex.test(inputValue));
-        }else{
-            setConfirmarSenha(inputValue.slice(0, maxLenght));
-            setIsConfirmPassword(false);
-        }
-
-       if(senha !== "" && inputValue !== senha){
-            console.log("As senhas não conferem");
-        }
-    }
-
-    async function handleCadastrar(event: FormEvent){
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        const data = {
-            email,
-            nome,
-            senha
-        };
-        await register(data);
-        message.success("Usuário cadastrado com sucesso!");
-    }
+        const emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        const senhaRegex = /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/;
+        const isEmailValid = emailRegex.test(email);
+        const isSenhaValid = senhaRegex.test(senha);
+    
+        if (!isEmailValid) {
+            message.error({
+                content: "E-mail inválido. Por favor, insira um endereço de e-mail válido.",
+                duration: 2
+            });
+            return;
+        }
+        if (!isSenhaValid) {
+            message.error({
+                content: "Senha inválida. A senha deve ter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula e um número.",
+                duration: 2
+            });
+            return;
+        }
+        await register({ email, nome, senha });
+    };
 
     return(
         <main className={styles.background}>
@@ -113,7 +65,7 @@ export default function RegisterPage(){
                         <input
                             className={!isValidName && nome.length > 0 ? 'invalid' : '' || isValidName && nome.length > 0 ? 'valid' : ''}  
                             value={nome} 
-                            onChange={handleNomeInput} 
+                            onChange={(e) => handleInputChange("nome", e.target.value, /^[a-zA-ZÀ-ÿ']+(([',. -][a-zA-ZÀ-ÿ])?[a-zA-ZÀ-ÿ]*)*$/, setNome, setIsValidName, 30)} 
                             type="text" 
                             placeholder="Nome completo"
                         />
@@ -121,7 +73,7 @@ export default function RegisterPage(){
                         <input
                             className={!isValidEmail && email.length > 0 ? 'invalid' : '' || isValidEmail && email.length > 0 ? 'valid' : ''}  
                             value={email} 
-                            onChange={handleEmailInput} 
+                            onChange={(e) => handleInputChange("email", e.target.value, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, setEmail, setIsValidEmail, 50)}  
                             type="email" 
                             placeholder="Seu E-mail"
                         />
@@ -129,7 +81,7 @@ export default function RegisterPage(){
                         <input
                             className={!isValidPassword && senha.length > 0 ? 'invalid' : '' || isValidPassword && senha.length > 0 ? 'valid' : ''}  
                             value={senha} 
-                            onChange={handleSenhaInput} 
+                            onChange={(e) => handleInputChange("senha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setSenha, setIsValidPassword, 20)}  
                             type="password" 
                             placeholder="Senha"
                         />
@@ -149,10 +101,10 @@ export default function RegisterPage(){
                             value={confirmarSenha}
                             type="password" 
                             placeholder="Confirmar senha"
-                            onChange={handleConfirmSenhaInput}
+                            onChange={(e) => handleInputChange("confirmarSenha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setConfirmarSenha, setIsConfirmPassword, 20)}  
                         />
 
-                        <button type='button' onClick={handleCadastrar}>
+                        <button type='button' onClick={handleSubmit}>
                             Cadastrar
                         </button>
                     </div>

@@ -2,7 +2,7 @@ import { ReactNode, useState } from "react";
 import { api } from "../../services/apiClient"
 import { AuthContext } from "./AuthContext";
 import Router from "next/router"
-import { rejects } from "assert";
+import { message } from "antd";
 
 type RegisterCredentials = {
   email: string;
@@ -29,35 +29,54 @@ export function AuthProvider({ children }: AuthProviderProps) {
   
   async function signin({email, senha}: SignInCredentials)  {
     try {
-      const response = await api.post("/signin", {
-        email,
-        senha
-      });
-      setUser({email});
+        const response = await api.post("/signin", {
+            email,
+            senha
+        });
 
-      console.log(response);
+        setUser({email});
 
-      const { token } = response.data;
+        const { token } = response.data;
 
-      if(typeof localStorage !== "undefined"){
-        localStorage.setItem(
-            "token",
-            token
-          );
-      }
-      Router.push("/");
-    } catch {}
-  }
+        if (typeof localStorage !== "undefined") {
+            localStorage.setItem("token", token);
+        }
 
-  async function register({email, nome, senha}: RegisterCredentials){
-    try{
-      await api.post("/usuarios", {
+        Router.push("/");
+    } catch (error: any) {
+        if (error.response.status === 401) {
+            message.error({
+              content: error.response.data,
+              duration: 5
+            });
+        }
+    }
+}
+
+  async function register({email, nome, senha}: RegisterCredentials) {
+    try {
+      const response = await api.post("/usuarios", {
         email,
         nome,
         senha
       });
-      Router.push("/login");
-    } catch{}
+  
+      // Verifica se a resposta do servidor foi bem-sucedida
+      if (response.status === 200) {
+        message.success("Usuário cadastrado com sucesso!");
+        Router.push("/login");
+      } else {
+        message.error({
+          content: "Ocorreu um erro ao cadastrar o usuário.",
+          duration: 5
+        });
+      }
+    } catch (error: any) {
+      message.error({
+        content: error?.response?.data || error.message,
+        duration: 5
+      });
+    }
   }
 
   function signout() {
