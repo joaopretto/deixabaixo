@@ -5,6 +5,11 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .container_logout{
@@ -114,9 +119,16 @@
 .form_input{
   background-color: #1E2020;
   width: 32em;
-  height: 13em;
+  height: 30em;
   border-radius: 20px;
   text-align: center;
+  box-shadow: 1px 1px 8px #424242;
+}
+
+.div_input{
+  display: grid;
+  grid-template-columns: 1em 30em 1em;
+  grid-template-rows: 6em 3em 5em 5em 5em 5em;
 }
 
 .form_input span{
@@ -126,4 +138,247 @@
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
   padding: 30px 86px;
+  justify-self: center;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.labeltag{
+  display: grid;
+  grid-template-columns: 5em 5px 3em 2em 1em 4em; 
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  margin-top: 0.5em;
+}
+
+#alugar{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  justify-self: end;
+  grid-column: 1;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-top: 0.5em;
+}
+
+#alugar:checked{
+  border: 5px solid #33bd8f;
+  outline: unset !important;
+}
+
+#comprar{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  position: relative;
+  justify-self: start;
+  grid-column: 5;
+  appearance: none;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid #999;
+  transition: 0.2s all linear;
+  margin-top: 0.5em;
+}
+
+#comprar:checked{
+  border: 5px solid #33bd8f;
+  outline: unset !important;
+}
+
+.labeltag .alugar1{
+  justify-self: start;
+  grid-column: 3;
+}
+
+.labeltag .comprar1{
+  justify-self: start;
+  grid-column: 6;
+}
+
+.size{
+  display: grid;
+  justify-self: center;
+  align-items: center;
+  grid-template-columns: 10em 2em 10em;
+  grid-row: 3;
+  grid-column: 2;
+}
+
+.minArea{
+  grid-column: 1;
+  appearance: none;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.12);
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: rgba(0,0,0,.54);
+  font-size: 16px;
+  height: 44px;
+  max-width: 100%;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.minArea:hover{
+  border: 3px solid #33bd8f;
+  font-size: 16px;
+  height: 44px;
+  max-width: 100%;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.maxArea{
+  grid-column: 3;
+  appearance: none;
+  background: #fff;
+  border: 3px solid rgba(0,0,0,.12);
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: rgba(0,0,0,.54);
+  font-size: 16px;
+  height: 44px;
+  max-width: 100%;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.maxArea:hover{
+  border: 3px solid #33bd8f;
+  font-size: 16px;
+  height: 44px;
+  max-width: 100%;
+  outline: none;
+  padding: 12px;
+  width: 100%;
+}
+
+.bedroom{
+  grid-template-rows: 2em;
+  display: grid;
+  grid-row: 4;
+  grid-column: 2;
+}
+
+.labelBedroom{
+  color: white;
+  font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ulBedroom{
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  height: auto;
+}
+
+.labelBedroom{
+  grid-row: 1;
+}
+
+.listQtd{
+  display: inline;
+  vertical-align: baseline;
+  list-style: none;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  float: left;
+  height: 2em;
+  border-radius: 5em;
+  position: relative;
+  width: 2em;
+}
+
+.listQtd + .listQtd{
+  margin-left: 25px;
+}
+
+.input-option {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.input-option:after {
+  content: "";
+  clear: both;
+}
+
+.listQtd label{
+  background: #fff no-repeat center center;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 5em;
+  white-space: nowrap;
+}
+
+.listQtd label span{
+  z-index: 1;
+  color: #1E2020;
+  font-size: 1em;
+  padding: 0;
+}
+
+.listQtd label input[type=radio]{
+  all: unset;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 5em;
+  top: 0;
+  left: 0;
+}
+
+.listQtd label input[type=radio]:checked {
+  background-color: #33bd8f;
+}
+
+.listQtd label input[type=radio]:checked + span{
+  color: #ffffff;
+}
+
+.bethroom{
+  grid-template-rows: 2em;
+  display: grid;
+  grid-row: 5;
+  grid-column: 2;
+}
+
+.ulBethroom{
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  height: auto;
+}
+
+.labelBethroom{
+  color: white;
+  font-size: 1.5em;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.searchButton{
+  grid-row: 6;
+  grid-column: 2;
+  align-self: center;
 }

@@ -29,6 +29,17 @@
     padding-top: 60px;
 }
 
+.form #input{
+    width: 18em;
+    height: 3em;
+    border-radius: 1em;
+    background-color: #393838;
+    color: darkgrey;
+    padding-left: 20px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 @media screen and (max-width: 600px){
     .form{
         width: 100%;

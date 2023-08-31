@@ -68,6 +68,7 @@ export default function RegisterPage(){
                             onChange={(e) => handleInputChange("nome", e.target.value, /^[a-zA-ZÀ-ÿ']+(([',. -][a-zA-ZÀ-ÿ])?[a-zA-ZÀ-ÿ]*)*$/, setNome, setIsValidName, 30)} 
                             type="text" 
                             placeholder="Nome completo"
+                            id={styles.input}
                         />
 
                         <input
@@ -76,6 +77,7 @@ export default function RegisterPage(){
                             onChange={(e) => handleInputChange("email", e.target.value, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, setEmail, setIsValidEmail, 50)}  
                             type="email" 
                             placeholder="Seu E-mail"
+                            id={styles.input}
                         />
 
                         <input
@@ -84,6 +86,7 @@ export default function RegisterPage(){
                             onChange={(e) => handleInputChange("senha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setSenha, setIsValidPassword, 20)}  
                             type="password" 
                             placeholder="Senha"
+                            id={styles.input}
                         />
                         <span className={styles.showInfo} onClick={handleInfoButtonClick}>Exibir informações</span>
                         {isInfoVisible && (
@@ -102,6 +105,7 @@ export default function RegisterPage(){
                             type="password" 
                             placeholder="Confirmar senha"
                             onChange={(e) => handleInputChange("confirmarSenha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setConfirmarSenha, setIsConfirmPassword, 20)}  
+                            id={styles.input}
                         />
 
                         <button type='button' onClick={handleSubmit}>

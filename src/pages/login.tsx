@@ -33,12 +33,13 @@ export default function LoginPage(){
                 <div className={styles.container}>
                     <div className={styles.form}>
 
-                    <input
+                        <input
                             className={!isValidEmail && email.length > 0 ? 'invalid' : '' || isValidEmail && email.length > 0 ? 'valid' : ''}  
                             value={email} 
                             onChange={(e) => handleInputChange("email", e.target.value, /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, setEmail, setIsValidEmail, 50)}  
                             type="email" 
                             placeholder="Seu E-mail"
+                            id={styles.input}
                         />
 
                         <input
@@ -47,6 +48,7 @@ export default function LoginPage(){
                             onChange={(e) => handleInputChange("senha", e.target.value, /^(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/, setSenha, setIsValidPassword, 20)}  
                             type="password" 
                             placeholder="Senha"
+                            id={styles.input}
                         />
 
                         <button type='button' onClick={handleLogin}>

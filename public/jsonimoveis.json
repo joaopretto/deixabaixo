@@ -1,0 +1,57 @@
+[
+    {
+        "titulo": "Apartamento com 2 Quartos para Aluguel, 42m²",
+        "m2": "42",
+        "quartos": "2",
+        "banheiros": "1",
+        "vaga": "1",
+        "valor": "710",
+        "condominio": "255",
+        "descricao": "Rua Telezinho Gomes Sardim, 170 - Vitta Sao Jose, Bauru - SP",
+        "status": 0
+    },
+    {
+        "titulo": "Apartamento com 2 Quartos para Aluguel, 68m²",
+        "m2": "68",
+        "quartos": "2",
+        "banheiros": "2",
+        "vaga": "1",
+        "valor": "2200",
+        "condominio": "370",
+        "descricao": "Rua Capitão João Antônio, 1030 - Vila Santo Antonio, Bauru - SP",
+        "status": 0
+    },
+    {
+        "titulo": "Apartamento com 2 Quartos para Aluguel, 45m²",
+        "m2": "45",
+        "quartos": "2",
+        "banheiros": "1",
+        "vaga": "1",
+        "valor": "850",
+        "condominio": "300",
+        "descricao": "Rua Benedita Cardoso Madureira, 766 - Jardim Estrela D\u0027alva, Bauru - SP",
+        "status": 0
+    },
+    {
+        "titulo": "Casa com 2 Quartos para Aluguel, 90m²",
+        "m2": "90",
+        "quartos": "2",
+        "banheiros": "1",
+        "vaga": "2",
+        "valor": "1100",
+        "condominio": "0",
+        "descricao": "Núcleo Residencial Presidente Geisel, Bauru - SP",
+        "status": 0
+    },
+    {
+        "titulo": "Apartamento com 3 Quartos para Aluguel, 120m²",
+        "m2": "120",
+        "quartos": "3",
+        "banheiros": "3",
+        "vaga": "2",
+        "valor": "3000",
+        "condominio": "900",
+        "descricao": "Rua Doutor Alípio dos Santos - Jardim Panorama, Bauru - SP",
+        "status": 0
+    }
+]
