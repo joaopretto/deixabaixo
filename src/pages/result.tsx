@@ -3,14 +3,23 @@ import Card from '../components/resultCard/card';
 import Image from 'next/image'
 import MyLogo from '../../public/images/logo_apenas.png'
 import MyTitle from '../../public/images/Titulo.png'
-import MyProfile from '../../public/images/Profile.png'
-import { useContext, useEffect, useState } from 'react'
+import { Key, useContext, useEffect, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
-import Router from 'next/router'
+import Router, { useRouter } from 'next/router'
+import Link from 'next/link';
 
-export default function Home() {
+export default function Result() {
   const { user, signout } = useContext(AuthContext);
-  const [searchResults, setSearchResults] = useState([]);
+  const router = useRouter();
+  const query = router.query.results;
+  const searchResults = query ? JSON.parse(query as string) : [];
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000)
+  }, [])
 
   async function handleLogout() {
     await signout();
@@ -21,54 +30,57 @@ export default function Home() {
     Router.push("/login");
   }
 
-  useEffect(() => {
-    fetch('/jsonimoveis.json')
-    .then(response => response.json())
-    .then(data => {
-      setSearchResults(data);
-    })
-    .catch(error => {
-      console.error('Erro ao carregar os dados: ', error);
-    })
-  })
 
   return  (
     <div className={styles.background}>
-        <header className={styles.header}>
-            {user ? (
-              <>
-              <div className={styles.container_login}>
-                <Image className={styles.logo} src={MyLogo} alt="Logo"/>
-                <Image className={styles.title} src={MyTitle} alt="Titulo"/>
-                <span className={styles.user}>{user.email}</span>
-                <button type='button' className={styles.button_login} onClick={handleLogout}>
-                  Sair
-                </button>
-                <Image className={styles.profile_login} src={MyProfile} alt="Perfil" />
-              </div>
-              </>
-            ) : (
+      {isLoading ? (
+        <div className={styles.loading}>
+          <div className={styles.spinner}></div>
+          <p className={styles.textLoading}>Carregando...</p>
+        </div>
+      ) : (
+        <>
+          <div className={styles.background}>
+          <header className={styles.header}>
+              {user ? (
                 <>
-                <div className={styles.container_logout}>
+                <div className={styles.container_login}>                
                   <Image className={styles.logo} src={MyLogo} alt="Logo"/>
                   <Image className={styles.title} src={MyTitle} alt="Titulo"/>
-                  <button type='button' className={styles.button_logout} onClick={handleEnter}>
-                      Entrar 
+                  <span className={styles.user}>{user.email}</span>
+                  <button type='button' className={styles.button_login} onClick={handleLogout}>
+                    Sair
                   </button>
-                  <Image className={styles.profile_logout} src={MyProfile} alt="Perfil" />
                 </div>
-              </>
-            )}
-        </header>
-        <main>
-          <h1>Resultado da Pesquisa</h1>
-          <p>Total de Resultados: {searchResults.length}</p>
-          <div className={styles.card_container}>
-              {searchResults.map((house, index) => (
-                <Card key={index} house={house}/>
-              ))}
-          </div>
-        </main>
+                </>
+              ) : (
+                  <>
+                  <div className={styles.container_logout}>
+                    <Link href='/'>
+                      <Image className={styles.logo} src={MyLogo} alt="Logo"/>
+                    </Link>
+                    <Link href='/'>
+                      <Image className={styles.title} src={MyTitle} alt="Titulo"/>
+                    </Link>
+                    <button type='button' className={styles.button_logout} onClick={handleEnter}>
+                        Entrar 
+                    </button>
+                  </div>
+                </>
+              )}
+          </header>
+          <main>
+            <h1 className={styles.result}>Resultado da Pesquisa: {searchResults.length}</h1>
+            <div className={styles.card_container}>
+                {searchResults.map((result: any, index: Key | null | undefined) => (
+                  <Card key={index} house={result}/>
+                ))}
+            </div>
+          </main>
+      </div>
+        </>
+      )}
     </div>
+      
   )
 }

@@ -1,6 +1,6 @@
 .background{
     background-color: rgba(0,0,0,0.2);
-    background-image: url(../../public/bauru.jpg);
+    background-image: url(../../public/Bauruzao.png);
     background-blend-mode: multiply;
     background-repeat: no-repeat;
     background-size: cover;
@@ -8,6 +8,12 @@
     display: flex;
     align-items: left;
     justify-content: left;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .sub_background{
@@ -22,11 +28,10 @@
 
 .form{
     display:flex;
+    flex-direction: column;
     gap: 25px;
     width: 350px;
     align-items: center;
-    flex-direction: column;
-    padding-top: 60px;
 }
 
 .form #input{

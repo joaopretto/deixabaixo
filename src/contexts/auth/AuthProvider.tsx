@@ -88,7 +88,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
         reject(error);
       }
     })
-    
   } 
 
   return (
