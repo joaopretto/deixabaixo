@@ -2,37 +2,37 @@ import styles from '../styles/Home.module.css'
 import Image from 'next/image'
 import MyLogo from '../../public/images/logo_apenas.png'
 import MyTitle from '../../public/images/Titulo.png'
-import { useContext, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
 import Router from 'next/router'
-import dadosJson from '../../public/jsonimoveis.json'
+import DadosJson from '../../public/jsonimoveis.json'
 import Link from 'next/link';
-import { api } from '@/services/apiClient'
 
 export default function Home() {
   const { user, signout } = useContext(AuthContext);
-  const [searchResults, setSearchResults] = useState<any>([]);
   const [selectedType, setSelectedType] = useState("0");
   const [formData, setFormData] = useState({
+    tipoImovel: '',
     qtdGarage: 0,
     qtdBedrooms: 0,
     qtdBathrooms: 0,
   });
 
-  async function handleSearch(){
+  const handleSearch = (e: React.FormEvent) =>{
+    e.preventDefault();
     try{
-      const response = await api.post("/recomenda", {
-        tipo: selectedType,
-        vaga: formData.qtdGarage,
-        quartos: formData.qtdBedrooms,
-        banheiros: formData.qtdBathrooms
-      })
-      const filteredResults = response.data;
-      setSearchResults(filteredResults);
+      const filteredData = DadosJson.filter((imovel) => {
+        return (
+          (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
+          (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
+          (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
+          (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms)
+        );
+      });
 
       Router.push({
         pathname: '/result',
-        query: {results: JSON.stringify(filteredResults)},
+        query: {results: JSON.stringify(filteredData)},
       });
     } catch(error){
       console.error("Erro ao buscar resultados: ", error);
