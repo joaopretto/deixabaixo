@@ -8,7 +8,4 @@ module.exports = {
   images: {
     domains: ['resizedimgs.vivareal.com', 'cdn1.vivareal.com'],
   },
-  experimental: {
-    reactRefresh: false,
-  },
 };

@@ -21,7 +21,7 @@
 
 .container_login{
   display: inline-grid;
-  grid-template-columns: 9em 10em 82em 9em 5em;
+  grid-template-columns: 10fr 10fr 100fr 10fr;
   justify-items: center;
 }
 
@@ -32,6 +32,49 @@
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.menuButton{
+  width: 20%;
+  height: 40%;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-overlay {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.menu {
+  position: fixed;
+  top: 100px;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  width: 187px; /* Largura do menu */
+  height: 100%; /* Altura do menu */
+  z-index: 1000; 
+  overflow-y: auto;
+}
+
+.menuOptions {
+  display: block;
+  padding: 10px;
+  margin: 5px;
+  width: 100%;
+  text-align: center;
+  border-radius: 10px;
+  color: white;
+  background: #299370;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.3s;
 }
 
 .button_logout{
@@ -138,6 +181,13 @@
   .container_logout {
     grid-template-columns: 10fr 10fr 100fr 10fr;
   }
+  .container_login{
+    grid-template-columns: 10fr 10fr 100fr 10fr;
+  }
+  .menuButton{
+    width: 20%;
+    height: auto;
+  }
   .button_logout {
     margin: 1em;
     padding: 8px; 
@@ -186,10 +236,22 @@
   .container_logout {
     grid-template-columns: 1fr 10fr;
   }
+  .container_login{
+    grid-template-columns: 1fr 12fr 10fr;
+  }
   .button_logout {
     margin: 2em;
     padding: 6px; 
     font-size: 12px;
+  }
+  .menuButton{
+    grid-column: 3;
+    grid-row: 1;
+    width: 20%;
+    height: auto;
+  }
+  .user{
+    display: none;
   }
   .logo {
     grid-column: 1;

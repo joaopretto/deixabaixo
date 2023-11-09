@@ -62,7 +62,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       });
   
       // Verifica se a resposta do servidor foi bem-sucedida
-      if (response.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         message.success("Usuário cadastrado com sucesso!");
         Router.push("/login");
       } else {
