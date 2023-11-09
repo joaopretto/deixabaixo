@@ -7,3 +7,11 @@ export function setupAPIClient(ctx = undefined) {
 
     return api;
 }
+
+export function setupAPIRecomendaClient(ctx = undefined) {
+    const api = axios.create({
+        baseURL: "http://localhost:5000/",
+    });
+
+    return api;
+}

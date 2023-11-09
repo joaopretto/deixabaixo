@@ -10,6 +10,7 @@ import DadosJson from '../../public/jsonimoveis.json'
 import Link from 'next/link';
 import { message } from 'antd'
 import 'rc-slider/assets/index.css';
+import { apiRecomenda } from '@/services/apiClient'
 
 
 export default function Home() {
@@ -30,7 +31,7 @@ export default function Home() {
 
   const [menuVisible, setMenuVisible] = useState(false);
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
 
     setError(false);
@@ -44,30 +45,49 @@ export default function Home() {
     }
 
     try {
-      const filteredData = DadosJson.filter((imovel) => {
+      // const filteredData = DadosJson.filter((imovel) => {
 
-        const selectedTypeValues = [selectedType, ...selectedTypes];
+      //   const selectedTypeValues = [selectedType, ...selectedTypes];
 
-        if (
-          selectedTypeValues.every((type) => type === "0") ||
-          !selectedTypeValues.includes(imovel.tipo)
-        ) {
-          return false;
-        }
+      //   if (
+      //     selectedTypeValues.every((type) => type === "0") ||
+      //     !selectedTypeValues.includes(imovel.tipo)
+      //   ) {
+      //     return false;
+      //   }
 
-        return (
-          (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
-          (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
-          (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
-          (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
-          (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
-          (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
-        );
-      });
+      //   return (
+      //     (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
+      //     (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
+      //     (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
+      //     (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
+      //     (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
+      //     (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
+      //   );
+      // });
+
+      const selectedTypeValues = [selectedType, ...selectedTypes];
+
+      const resultadoTypes = selectedTypeValues.filter(item => item != "0")
+
+      const response = await apiRecomenda.post("/recomenda", {
+        tipo: resultadoTypes,
+        vaga: formData.qtdGarage,
+        quarto: formData.qtdBedrooms,
+        banheiro: formData.qtdBathrooms,
+        valorMinimo: formData.minValue,
+        valorMaximo: formData.maxValue,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      })
+      const filteredResults = response.data;
 
       Router.push({
         pathname: '/result',
-        query: { results: JSON.stringify(filteredData) },
+        query: { results: JSON.stringify(filteredResults) },
       });
     } catch (error) {
       console.error("Erro ao buscar resultados: ", error);
@@ -168,9 +188,12 @@ export default function Home() {
                       onBlur={() => setIsSelectValid(selectedType !== "0")}
                     >
                       <option value="0">Tipo de Imovel</option>
-                      <option value="Apartamento">Apartamento</option>
-                      <option value="Condominio">Condominio</option>
                       <option value="Casa">Casa</option>
+                      <option value="Apartamento">Apartamento</option>
+                      <option value="Sala/Conjunto">Sala/Conjunto</option>
+                      <option value="Kitnet/Conjugado">Kitnet/Conjugado</option>
+                      <option value="Ponto/Imóvel Comercial">Ponto/Imóvel Comercial</option>
+                      <option value="Prédio/Edifício">Prédio/Edifício</option>
                     </select>
                   </div>
                   {Array.from({ length: numberOfClones }).map((_, index) => (
@@ -187,32 +210,38 @@ export default function Home() {
                         onBlur={() => setIsSelectValid(selectedTypes[index] !== "0")}
                       >
                         <option value="0">Tipo de Imovel</option>
-                        <option value="Apartamento">Apartamento</option>
-                        <option value="Condominio">Condominio</option>
                         <option value="Casa">Casa</option>
+                        <option value="Apartamento">Apartamento</option>
+                        <option value="Sala/Conjunto">Sala/Conjunto</option>
+                        <option value="Kitnet/Conjugado">Kitnet/Conjugado</option>
+                        <option value="Ponto/Imóvel Comercial">Ponto/Imóvel Comercial</option>
+                        <option value="Prédio/Edifício">Prédio/Edifício</option>
                       </select>
                     </div>
                   ))}
                 </div>
                 <div className={Styles.value}>
                   <div>
+
                     <label className={Styles.labelValue}>Valor do Imóvel</label>
+                    <br></br>
                     <label className={Styles.labelMaxMinValue}>Mínimo: R$ {formData.minValue}</label>
                     <input
                       className={Styles.slider}
                       type="range"
                       name="value"
                       min="0"
-                      max="300"
+                      max="200"
                       value={formData.minValue}
                       onChange={(e) => setFormData({ ...formData, minValue: parseFloat(e.target.value) })}
                     />
+                    
                     <label className={Styles.labelMaxMinValue}>Máximo: R$ {formData.maxValue}</label>
                     <input
                       className={Styles.slider}
                       type="range"
                       name="value"
-                      min="0"
+                      min="1000"
                       max="10000"
                       value={formData.maxValue}
                       onChange={(e) => setFormData({ ...formData, maxValue: parseFloat(e.target.value) })}
