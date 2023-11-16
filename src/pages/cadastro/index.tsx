@@ -1,8 +1,8 @@
-import styles from '../styles/Cadastro.module.css'
+import styles from '@/styles/cadastro.module.css'
 
-import CadastroCard from '../components/cadastroCard/cadastroCard'
+import CadastroCard from '@/components/cadastroCard/cadastroCard'
 import Image from 'next/image'
-import MyLogo from '../../public/images/DeixaBaixo_logo.png'
+import MyLogo from '../../../public/images/deixaBaixo_logo.png'
 import Link from 'next/link'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
@@ -113,6 +113,7 @@ export default function RegisterPage(){
                         </button>
                     </div>
                 </div>
+                <span className={styles.alert}>Ao se cadastrar, você estará aceitando receber nossas recomendações de imóveis *</span>
                 <p className={styles.p}>
                     <Link href="/login">
                         <span className={styles.span}>Já possui uma conta?</span>

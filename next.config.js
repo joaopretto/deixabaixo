@@ -1,10 +1,6 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-}
-
 module.exports = {
-  nextConfig,
+  reactStrictMode: true,
   images: {
     domains: ['resizedimgs.vivareal.com', 'cdn1.vivareal.com'],
   },

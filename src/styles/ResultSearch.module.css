@@ -130,6 +130,35 @@
   align-self: center;
 }
 
+.containerForm{
+  justify-content: end;
+  display: flex;
+}
+
+.showForm{
+  position: fixed;
+  width: 10vh;
+  font-size: 1.8vh;
+  z-index: 1;
+  margin-right: 3em;
+}
+
+.form_results {
+  background-color: #1E2020;
+  width: 32em;
+  min-height: 34em;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 1px 1px 8px #424242;
+  position: fixed;
+  margin: 4em 1em;
+}
+
+.div_input {
+  display: grid;
+  grid-template-columns: 3fr 50fr 3fr;
+}
+
 .card_container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -217,6 +246,12 @@
     padding: 8px; 
     font-size: 14px; 
   }
+
+  .form_results {
+    max-width: 28em;
+    margin: -5em 10em;
+  }
+
   .logo {
     width: 80px;
     height: 80px;
@@ -264,5 +299,52 @@
   .result{
     font-size: 20px;
     padding: 10px 60px;
+  }
+
+  .form_results {
+    width: 100vh;
+    background-color: rgb(30, 32, 32, 0.8);
+    border-radius: 0;
+    box-shadow: none;
+    margin: 0;
+    position: static;
+  }
+
+  .form_results span {
+    align-self: center;
+    font-size: 1.5em;
+  }
+
+  .div_input {
+    grid-template-rows: 1fr;
+  }
+
+  .valueMin{
+    justify-self: start;
+    grid-column: 1;
+    grid-row: 2;
+    margin-left: 3em;
+    width: 8em;
+    height: 3em;
+    border-radius: .5em;
+    border: none;
+    padding: 12px;
+  }
+  
+  .valueMax{
+    justify-self: end;
+    grid-column: 1;
+    grid-row: 2;
+    margin-right: 3em;
+    width: 8em;
+    height: 3em;
+    border-radius: .5em;
+    border: none;
+    padding: 12px;
+  }
+
+  .showForm{
+    position: fixed;
+    margin: 42em 1em;
   }
 }

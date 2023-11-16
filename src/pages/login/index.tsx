@@ -1,8 +1,8 @@
-import styles from '../styles/Login.module.css'
+import styles from '@/styles/login.module.css'
 
-import LoginCard from '../components/loginCard/loginCard'
+import LoginCard from '@/components/loginCard/loginCard'
 import Image from 'next/image'
-import MyLogo from '../../public/images/DeixaBaixo_logo.png'
+import MyLogo from '../../../public/images/deixaBaixo_logo.png'
 import Link from 'next/link'
 import { FormEvent, useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'

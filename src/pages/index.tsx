@@ -1,17 +1,13 @@
-import Styles from '../Styles/Home.module.css'
+import styles from '../styles/home.module.css'
 import Image from 'next/image'
-import MyLogo from '../../public/images/logo_apenas.png'
-import MyTitle from '../../public/images/Titulo.png'
-import React, { useContext, useState } from 'react'
-import Slider from 'rc-slider';
+import myLogo from '../../public/images/logo_apenas.png'
+import { useContext, useState } from 'react'
 import { AuthContext } from '@/contexts/auth/AuthContext'
 import Router from 'next/router'
 import DadosJson from '../../public/jsonimoveis.json'
 import Link from 'next/link';
 import { message } from 'antd'
-import 'rc-slider/assets/index.css';
 import { apiRecomenda } from '@/services/apiClient'
-
 
 export default function Home() {
   const { user, signout } = useContext(AuthContext);
@@ -45,50 +41,53 @@ export default function Home() {
     }
 
     try {
-      // const filteredData = DadosJson.filter((imovel) => {
+      const filteredData = DadosJson.filter((imovel) => {
 
-      //   const selectedTypeValues = [selectedType, ...selectedTypes];
+        const selectedTypeValues = [selectedType, ...selectedTypes];
+      // const emailToSend = user ? user.email : '';
 
-      //   if (
-      //     selectedTypeValues.every((type) => type === "0") ||
-      //     !selectedTypeValues.includes(imovel.tipo)
-      //   ) {
-      //     return false;
-      //   }
+        if (
+          selectedTypeValues.every((type) => type === "0") ||
+          !selectedTypeValues.includes(imovel.tipo)
+        ) {
+          return false;
+        }
 
-      //   return (
-      //     (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
-      //     (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
-      //     (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
-      //     (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
-      //     (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
-      //     (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
-      //   );
-      // });
+        return (
+          (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
+          (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
+          (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
+          (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
+          (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
+          (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
+        );
+      });
 
-      const selectedTypeValues = [selectedType, ...selectedTypes];
+      // const selectedTypeValues = [selectedType, ...selectedTypes];
 
-      const resultadoTypes = selectedTypeValues.filter(item => item != "0")
+      // const resultadoTypes = selectedTypeValues.filter(item => item != "0")
 
-      const response = await apiRecomenda.post("/recomenda", {
-        tipo: resultadoTypes,
-        vaga: formData.qtdGarage,
-        quarto: formData.qtdBedrooms,
-        banheiro: formData.qtdBathrooms,
-        valorMinimo: formData.minValue,
-        valorMaximo: formData.maxValue,
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true
-      })
-      const filteredResults = response.data;
+      // const response = await apiRecomenda.post("/recomenda", {
+      //   tipo: resultadoTypes,
+      //   vaga: formData.qtdGarage,
+      //   quarto: formData.qtdBedrooms,
+      //   banheiro: formData.qtdBathrooms,
+      //   valorMinimo: formData.minValue,
+      //   valorMaximo: formData.maxValue,
+      //   email: emailToSend, 
+      // }, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   withCredentials: true
+      // })
+      // const filteredResults = response.data;
 
       Router.push({
-        pathname: '/result',
-        query: { results: JSON.stringify(filteredResults) },
+        pathname: '/results',
+        query: { results: JSON.stringify(filteredData) },
       });
+      console.log(filteredData);
     } catch (error) {
       console.error("Erro ao buscar resultados: ", error);
     }
@@ -96,10 +95,6 @@ export default function Home() {
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible);
-  }
-
-  const addToFavorites = () => {
-    // Implemente a lógica para adicionar o imóvel aos favoritos aqui
   }
 
   const handleCloneSelect = () => {
@@ -119,28 +114,26 @@ export default function Home() {
   }
 
   return (
-    <div className={Styles.background}>
-      <header className={Styles.header}>
+    <div className={styles.background}>
+      <header className={styles.header}>
         {user ? (
           <>
-            <div className={Styles.container_login}>
+            <div className={styles.container_login}>
               <Link href='/'>
-                <Image className={Styles.logo} src={MyLogo} alt="Logo" />
+                <Image className={styles.logo} src="/images/logo_apenas.png" width={100} height={100} alt="Logo" />
               </Link>
               <Link href='/'>
-                <Image className={Styles.title} src={MyTitle} alt="Titulo" />
+                <Image className={styles.title} src="/images/titulo.png" width={160} height={33} alt="Logo" />
               </Link>
-              <span className={Styles.user}>{user.email}</span>
-              <button type='button' className={Styles.menuButton} onClick={toggleMenu}>
+              <span className={styles.user}>{user.email}</span>
+              <button type='button' className={styles.menuButton} onClick={toggleMenu}>
                 &#9776;
               </button>
               {menuVisible && (
-                <div className={Styles.menu_overlay}>
-                  <div className={Styles.menu}>
-                    {/* Coloque aqui os itens do menu, como opções de perfil, configurações, etc. */}
+                <div className={styles.menu_overlay}>
+                  <div className={styles.menu}>
                     <ul>
-                      <button className={Styles.menuOptions} onClick={addToFavorites}>Favoritos</button>
-                      <button className={Styles.menuOptions} onClick={handleLogout}>Sair</button>
+                      <button className={styles.menuOptions} onClick={handleLogout}>Sair</button>
                     </ul>
                   </div>
                 </div>
@@ -149,10 +142,10 @@ export default function Home() {
           </>
         ) : (
           <>
-            <div className={Styles.container_logout}>
-              <Image className={Styles.logo} src={MyLogo} alt="Logo" />
-              <Image className={Styles.title} src={MyTitle} alt="Titulo" />
-              <button type='button' className={Styles.button_logout} onClick={handleEnter}>
+            <div className={styles.container_logout}>
+              <Image className={styles.logo} src="/images/logo_apenas.png" width={100} height={100} alt="Logo" />
+              <Image className={styles.title} src="/images/titulo.png" width={160} height={33} alt="Logo" />
+              <button type='button' className={styles.button_logout} onClick={handleEnter}>
                 Entrar
               </button>
             </div>
@@ -160,29 +153,20 @@ export default function Home() {
         )}
       </header>
       <main>
-        <div className={Styles.container_main}>
-          <div className={Styles.container_text}>
+        <div className={styles.container_main}>
+          <div className={styles.container_text}>
             <p>Seu imóvel<br></br>mais barato apenas em<br></br> Bauru</p>
           </div>
-          <div className={Styles.container_form}>
-            <form className={Styles.form_input}>
-              <div className={Styles.div_input}>
+          <div className={styles.container_form}>
+            <form className={styles.form_input}>
+              <div className={styles.div_input}>
                 <span>Deixa Baixo o imóvel de sua preferência só aqui</span>
-                {/* <div className={Styles.labeltag}>
-                  <input
-                    type="radio"
-                    id={Styles.alugar}
-                    name="radio"
-                    value="Alugar">
-                  </input>
-                  <label className={Styles.alugar1}>Alugar</label>
-                </div> */}
-                <div className={Styles.type}>
-                  <label className={Styles.labelType}>Tipo do Imóvel *</label>
-                  <div className={Styles.divSelect}>
+                <div className={styles.type}>
+                  <label className={styles.labelType}>Tipo do Imóvel *</label>
+                  <div className={styles.divSelect}>
                     <select
                       name="typeImovel"
-                      className={error ? `${Styles.selectType} ${Styles.error}` : Styles.selectType}
+                      className={error ? `${styles.selectType} ${styles.error}` : styles.selectType}
                       value={selectedType}
                       onChange={(e) => setSelectedType(e.target.value)}
                       onBlur={() => setIsSelectValid(selectedType !== "0")}
@@ -197,10 +181,10 @@ export default function Home() {
                     </select>
                   </div>
                   {Array.from({ length: numberOfClones }).map((_, index) => (
-                    <div className={`${Styles.divSelect} clonedSelect`} key={index}>
+                    <div className={`${styles.divSelect} clonedSelect`} key={index}>
                       <select
                         name={`typeImovel${index + 1}`}
-                        className={Styles.selectType}
+                        className={styles.selectType}
                         value={selectedTypes[index]}
                         onChange={(e) => {
                           const updatedSelectedTypes = [...selectedTypes];
@@ -220,14 +204,14 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
-                <div className={Styles.value}>
+                <div className={styles.value}>
                   <div>
 
-                    <label className={Styles.labelValue}>Valor do Imóvel</label>
+                    <label className={styles.labelValue}>Valor do Imóvel</label>
                     <br></br>
-                    <label className={Styles.labelMaxMinValue}>Mínimo: R$ {formData.minValue}</label>
+                    <label className={styles.labelMaxMinValue}>Mínimo: R$ {formData.minValue}</label>
                     <input
-                      className={Styles.slider}
+                      className={styles.slider}
                       type="range"
                       name="value"
                       min="0"
@@ -235,10 +219,10 @@ export default function Home() {
                       value={formData.minValue}
                       onChange={(e) => setFormData({ ...formData, minValue: parseFloat(e.target.value) })}
                     />
-                    
-                    <label className={Styles.labelMaxMinValue}>Máximo: R$ {formData.maxValue}</label>
+
+                    <label className={styles.labelMaxMinValue}>Máximo: R$ {formData.maxValue}</label>
                     <input
-                      className={Styles.slider}
+                      className={styles.slider}
                       type="range"
                       name="value"
                       min="1000"
@@ -246,28 +230,12 @@ export default function Home() {
                       value={formData.maxValue}
                       onChange={(e) => setFormData({ ...formData, maxValue: parseFloat(e.target.value) })}
                     />
-                    {/* <input
-                      type="number"
-                      name="value"
-                      className={Styles.valueMin}
-                      placeholder="Valor Min"
-                      value={formData.minValue !== 0 ? formData.minValue : ""}
-                      onChange={(e) => setFormData({ ...formData, minValue: parseFloat(e.target.value) })}
-                    />
-                    <input
-                      type="number"
-                      name="value"
-                      className={Styles.valueMax}
-                      placeholder="Valor Max"
-                      value={formData.maxValue !== 0 ? formData.maxValue : ""}
-                      onChange={(e) => setFormData({ ...formData, maxValue: parseFloat(e.target.value) })}
-                    /> */}
                   </div>
                 </div>
-                <div className={Styles.bedroom}>
-                  <label className={Styles.labelBedroom}>Quantidade de quartos</label>
-                  <ul className={Styles.ulBedroom}>
-                    <li className={Styles.listQtd}>
+                <div className={styles.bedroom}>
+                  <label className={styles.labelBedroom}>Quantidade de quartos</label>
+                  <ul className={styles.ulBedroom}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -279,7 +247,7 @@ export default function Home() {
                         <span>1</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -291,7 +259,7 @@ export default function Home() {
                         <span>2</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -303,7 +271,7 @@ export default function Home() {
                         <span>3</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -317,10 +285,10 @@ export default function Home() {
                     </li>
                   </ul>
                 </div>
-                <div className={Styles.bethroom}>
-                  <label className={Styles.labelBethroom}>Quantidade de banheiros</label>
-                  <ul className={Styles.ulBethroom}>
-                    <li className={Styles.listQtd}>
+                <div className={styles.bethroom}>
+                  <label className={styles.labelBethroom}>Quantidade de banheiros</label>
+                  <ul className={styles.ulBethroom}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -332,7 +300,7 @@ export default function Home() {
                         <span>1</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -344,7 +312,7 @@ export default function Home() {
                         <span>2</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -356,7 +324,7 @@ export default function Home() {
                         <span>3</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -370,10 +338,10 @@ export default function Home() {
                     </li>
                   </ul>
                 </div>
-                <div className={Styles.garage}>
-                  <label className={Styles.labelGarage}>Quantidade de vagas</label>
-                  <ul className={Styles.ulGarage}>
-                    <li className={Styles.listQtd}>
+                <div className={styles.garage}>
+                  <label className={styles.labelGarage}>Quantidade de vagas</label>
+                  <ul className={styles.ulGarage}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -385,7 +353,7 @@ export default function Home() {
                         <span>1</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -397,7 +365,7 @@ export default function Home() {
                         <span>2</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -409,7 +377,7 @@ export default function Home() {
                         <span>3</span>
                       </label>
                     </li>
-                    <li className={Styles.listQtd}>
+                    <li className={styles.listQtd}>
                       <label>
                         <input
                           type="radio"
@@ -423,10 +391,10 @@ export default function Home() {
                     </li>
                   </ul>
                 </div>
-                <button className={Styles.addSelect} onClick={(e) => { e.preventDefault(); handleCloneSelect(); }} disabled={numberOfClones === 2}>
+                <button className={styles.addSelect} onClick={(e) => { e.preventDefault(); handleCloneSelect(); }} disabled={numberOfClones === 2}>
                   +
                 </button>
-                <div className={Styles.searchButton}>
+                <div className={styles.searchButton}>
                   <button type="button" onClick={handleSearch}>
                     Buscar
                   </button>

@@ -45,24 +45,6 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-@media screen and (max-width: 600px){
-    .form{
-        width: 100%;
-        height: 100%;
-        padding: 20px;
-    }
-
-    .form input[type="text"],
-    .form input[type="email"],
-    .form input[type="password"]{
-        width: 100%;
-    }
-
-    .form button[type="button"]{
-        width: 100%;
-    }
-}
-
 .title{
     display: block;
     text-align: center;
@@ -75,16 +57,7 @@
     width: 200px;
     height: 200px;
     display: block;
-    margin: 0 auto;
-}
-
-@media screen and (max-width: 600px){
-    .logo{
-        width: 100%;
-        max-width: 150px;
-        height: auto;
-        max-height: 200px;
-    }
+    margin: 0 0 40px 0;
 }
 
 .p{
@@ -93,13 +66,6 @@
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
     color: white;
-}
-
-@media screen and (max-width: 600px){
-    .p{
-        font-size: 16px;
-        padding: 20px;
-    }
 }
 
 .span{
@@ -115,4 +81,35 @@
     margin: -1.5em;
     margin-left: -18em;
     font-size: 14px;
+}
+
+@media(max-width: 1367px){
+    .form #input{
+        width: 15em;
+        height: 2.5em;
+    }
+    .logo{
+        width: 150px;
+        height: 150px;
+        margin: 0 0 40px 0;
+    }
+    .p{
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 600px){
+    .form #input{
+        width: 14em;
+        height: 2.5em;
+    }
+    .logo{
+        width: 150px;
+        height: 150px;
+        margin: 0 0 40px 0;
+    }
+
+    .p{
+        font-size: 16px;
+    }
 }

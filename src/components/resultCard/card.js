@@ -30,8 +30,9 @@ const Card = ({ house }) => {
           <p className={styles.information}>{`${house.quartos}`}</p>
         </div>
       </div>
-      <p className={styles.value}>{`Valor: R$ ${house.valor}`}</p>
+      <p className={styles.description}>{`Valor: R$ ${house.valor}`}</p>
       <p className={styles.description}>{`Condomínio: R$ ${house.condominio}`}</p>
+      <p className={styles.value}>{`Valor total: R$ ${house.valor_total}`}</p>
       <p className={styles.description}>{house.descricao}</p>
     </div>
   );

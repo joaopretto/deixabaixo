@@ -9,10 +9,16 @@
     flex-direction: column;
 }
 
-@media screen and (max-width: 768px) {
+@media (max-width: 1367px){
+    .card{
+        justify-content: center;
+        width: 35%;
+        min-height: 30em;
+    }
+}
+
+@media (max-width: 768px) {
     .card{
         width: 100%;
-        max-height: auto;
-        
     }
 }

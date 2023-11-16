@@ -1,18 +1,23 @@
 .card{
     background-color: #1E2020;
     width: 40em;
-    height: 100vh;
+    min-height: 100vh;
     padding: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
 }
 
-@media screen and (max-width: 768px) {
+@media(max-width: 1367px){
+    .card{
+        width: 30em;
+        min-height: 110vh;
+    }
+}
+
+@media(max-width: 768px) {
     .card{
         width: 100%;
-        max-height: auto;
-        
+        min-height: 120vh;
     }
 }
