@@ -98,6 +98,17 @@
     }
 }
 
+@media(max-width: 1000px){
+    .background{
+        display: flex;
+        justify-content: center;
+    }
+    .form #input{
+        width: 15em;
+        height: 2.5em;
+    }
+}
+
 @media (max-width: 600px){
     .form #input{
         width: 14em;

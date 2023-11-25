@@ -130,3 +130,14 @@
         font-size: 16px;
     }
 }
+
+@media(max-width: 1000px){
+    .background{
+        display: flex;
+        justify-content: center;
+    }
+    .form #input{
+        width: 15em;
+        height: 2.5em;
+    }
+}

@@ -17,6 +17,16 @@
     }
 }
 
+@media(max-width: 1000px){
+    .card{
+        width: 50%;
+        height: 50vh;
+        display: flex;
+        margin-top: 40%;
+        border-radius: 20px;
+    }
+}
+
 @media (max-width: 768px) {
     .card{
         width: 100%;

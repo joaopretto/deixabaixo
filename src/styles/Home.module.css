@@ -618,6 +618,16 @@
   }
 }
 
+@media (max-width: 1000px){
+  .container_main {
+    display: flex;
+    justify-content: center;
+  }
+  .container_text p {
+    display: none;
+  } 
+}
+
 @media (max-width: 600px) {
   .container_logout {
     background-color: rgb(30, 32, 32, 0.8);

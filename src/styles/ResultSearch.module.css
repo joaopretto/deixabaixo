@@ -263,6 +263,19 @@
   }
 }
 
+@media (max-width: 1000px){
+  .card_container {
+    grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
+  }
+  .showForm{
+    position: fixed;
+    margin: 0 1em;
+    width: 10vh;
+    height: 4vh;
+  }
+}
+
 @media (max-width: 600px){
   .card_container{
     grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
