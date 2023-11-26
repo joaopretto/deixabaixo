@@ -2,6 +2,6 @@
 module.exports = {
   reactStrictMode: true,
   images: {
-    domains: ['resizedimgs.vivareal.com', 'cdn1.vivareal.com'],
+    domains: ['resizedimgs.vivareal.com', 'cdn1.vivareal.com', 'www.concretoimoveis.com.br', 'www.webmobby.com.br'],
   },
 };

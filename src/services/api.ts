@@ -15,3 +15,11 @@ export function setupAPIRecomendaClient(ctx = undefined) {
 
     return api;
 }
+
+export function setupAPITracingClient(ctx = undefined) {
+    const api = axios.create({
+        baseURL: "http://localhost:8085/",
+    });
+
+    return api;
+}

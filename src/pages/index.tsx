@@ -7,7 +7,7 @@ import Router from 'next/router'
 import DadosJson from '../../public/jsonimoveis.json'
 import Link from 'next/link';
 import { message } from 'antd'
-import { apiRecomenda } from '@/services/apiClient'
+import { apiRecomenda, apiTracing } from '@/services/apiClient'
 
 export default function Home() {
   const { user, signout } = useContext(AuthContext);
@@ -41,53 +41,73 @@ export default function Home() {
     }
 
     try {
-      const filteredData = DadosJson.filter((imovel) => {
+      // const filteredData = DadosJson.filter((imovel) => {
 
-        const selectedTypeValues = [selectedType, ...selectedTypes];
-      // const emailToSend = user ? user.email : '';
+      //   const selectedTypeValues = [selectedType, ...selectedTypes];
+      // // const emailToSend = user ? user.email : '';
 
-        if (
-          selectedTypeValues.every((type) => type === "0") ||
-          !selectedTypeValues.includes(imovel.tipo)
-        ) {
-          return false;
+      //   if (
+      //     selectedTypeValues.every((type) => type === "0") ||
+      //     !selectedTypeValues.includes(imovel.tipo)
+      //   ) {
+      //     return false;
+      //   }
+
+      //   return (
+      //     (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
+      //     (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
+      //     (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
+      //     (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
+      //     (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
+      //     (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
+      //   );
+      // });
+      const emailToSend = user ? user.email : '';
+      const selectedTypeValues = [selectedType, ...selectedTypes];
+
+      const resultadoTypes = selectedTypeValues.filter(item => item != "0")
+
+      if (emailToSend != '') {
+        try{
+          const responseTracing = await apiTracing.post("/api/v1/tracing", {
+            tipo: resultadoTypes,
+            vagas: formData.qtdGarage,
+            quartos: formData.qtdBedrooms,
+            banheiros: formData.qtdBathrooms,
+            valorMinimo: formData.minValue,
+            valorMaximo: formData.maxValue,
+            emailUsuario: emailToSend, 
+          }, {
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json"
+            }
+          })
+        } catch (error) {
+          console.error("Erro ao enviar tracing: ", error);
         }
+      }
 
-        return (
-          (formData.tipoImovel === '' || imovel.tipo === formData.tipoImovel) &&
-          (formData.qtdGarage === 0 || imovel.vaga === formData.qtdGarage) &&
-          (formData.qtdBedrooms === 0 || imovel.quartos === formData.qtdBedrooms) &&
-          (formData.qtdBathrooms === 0 || imovel.banheiros === formData.qtdBathrooms) &&
-          (formData.minValue === 0 || imovel.valor_total >= formData.minValue) &&
-          (formData.maxValue === 0 || imovel.valor_total <= formData.maxValue)
-        );
-      });
-
-      // const selectedTypeValues = [selectedType, ...selectedTypes];
-
-      // const resultadoTypes = selectedTypeValues.filter(item => item != "0")
-
-      // const response = await apiRecomenda.post("/recomenda", {
-      //   tipo: resultadoTypes,
-      //   vaga: formData.qtdGarage,
-      //   quarto: formData.qtdBedrooms,
-      //   banheiro: formData.qtdBathrooms,
-      //   valorMinimo: formData.minValue,
-      //   valorMaximo: formData.maxValue,
-      //   email: emailToSend, 
-      // }, {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   withCredentials: true
-      // })
-      // const filteredResults = response.data;
+      const response = await apiRecomenda.post("/recomenda", {
+        tipo: resultadoTypes,
+        vaga: formData.qtdGarage,
+        quarto: formData.qtdBedrooms,
+        banheiro: formData.qtdBathrooms,
+        valorMinimo: formData.minValue,
+        valorMaximo: formData.maxValue,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true
+      })
+      const filteredResults = response.data;
 
       Router.push({
         pathname: '/results',
-        query: { results: JSON.stringify(filteredData) },
+        query: { results: JSON.stringify(filteredResults) },
       });
-      console.log(filteredData);
+      console.log(filteredResults);
     } catch (error) {
       console.error("Erro ao buscar resultados: ", error);
     }
