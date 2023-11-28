@@ -8,6 +8,7 @@ import DadosJson from '../../public/jsonimoveis.json'
 import Link from 'next/link';
 import { message } from 'antd'
 import { apiRecomenda, apiTracing } from '@/services/apiClient'
+import CryptoJS from 'crypto-js';
 
 export default function Home() {
   const { user, signout } = useContext(AuthContext);
@@ -98,7 +99,7 @@ export default function Home() {
       }, {
         headers: {
           "Content-Type": "application/json",
-        },
+      },
         withCredentials: true
       })
       const filteredResults = response.data;
