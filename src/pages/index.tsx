@@ -26,6 +26,16 @@ export default function Home() {
     maxValue: 0,
   });
 
+  function convertToSHA1(password: string) {
+    // Converte a senha para SHA-1 usando o CryptoJS
+    var sha1Hash = CryptoJS.SHA1(password);
+
+    // O resultado é um objeto WordArray, converta para string hexadecimal
+    var sha1String = sha1Hash.toString(CryptoJS.enc.Hex);
+
+    return sha1String;
+}
+
   const [menuVisible, setMenuVisible] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
@@ -69,7 +79,10 @@ export default function Home() {
       const resultadoTypes = selectedTypeValues.filter(item => item != "0")
 
       if (emailToSend != '') {
-        try{
+        try{      
+        
+          var hash = 'DSAD77#!CXERF@%DSADsadsad$@#$@#$#@8nf83nd934n#$dfsd5DS#@EGERT';
+
           const responseTracing = await apiTracing.post("/api/v1/tracing", {
             tipo: resultadoTypes,
             vagas: formData.qtdGarage,
@@ -81,9 +94,13 @@ export default function Home() {
           }, {
             headers: {
               "Content-Type": "application/json",
-              "Accept": "application/json"
+              "Accept": "application/json",
+              "Authorization": hash
             }
           })
+            
+          
+          
         } catch (error) {
           console.error("Erro ao enviar tracing: ", error);
         }

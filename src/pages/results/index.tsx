@@ -82,7 +82,10 @@ export default function Result() {
       const resultadoTypes = selectedTypeValues.filter(item => item != "0")
 
       if (emailToSend != '') {
-        try{
+        try{      
+        
+          var hash = 'DSAD77#!CXERF@%DSADsadsad$@#$@#$#@8nf83nd934n#$dfsd5DS#@EGERT';
+
           const responseTracing = await apiTracing.post("/api/v1/tracing", {
             tipo: resultadoTypes,
             vagas: formData.qtdGarage,
@@ -94,9 +97,13 @@ export default function Result() {
           }, {
             headers: {
               "Content-Type": "application/json",
-              "Accept": "application/json"
+              "Accept": "application/json",
+              "Authorization": hash
             }
           })
+            
+          
+          
         } catch (error) {
           console.error("Erro ao enviar tracing: ", error);
         }
@@ -449,7 +456,7 @@ export default function Result() {
                   </form></>
                 )}
               </div>
-              <h1 className={styles.result}>Resultado da Pesquisa: {searchResults.length}</h1>
+              <h1 className={styles.result}>{searchResults.length} Opções mais próximas da sua busca</h1>
               <div className={styles.card_container}>
                 {searchResults.map((result: any, index: Key | null | undefined) => (
                   <Card key={index} house={result} />
