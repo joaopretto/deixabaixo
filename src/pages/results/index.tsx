@@ -83,8 +83,6 @@ export default function Result() {
 
       if (emailToSend != '') {
         try{      
-        
-          var hash = 'DSAD77#!CXERF@%DSADsadsad$@#$@#$#@8nf83nd934n#$dfsd5DS#@EGERT';
 
           const responseTracing = await apiTracing.post("/api/v1/tracing", {
             tipo: resultadoTypes,
@@ -98,7 +96,7 @@ export default function Result() {
             headers: {
               "Content-Type": "application/json",
               "Accept": "application/json",
-              "Authorization": hash
+              "Authorization": process.env.NEXT_PUBLIC_API_KEY
             }
           })
             
@@ -230,7 +228,6 @@ export default function Result() {
                             <option value="Sala/Conjunto">Sala/Conjunto</option>
                             <option value="Kitnet/Conjugado">Kitnet/Conjugado</option>
                             <option value="Ponto/Imóvel Comercial">Ponto/Imóvel Comercial</option>
-                            <option value="Prédio/Edifício">Prédio/Edifício</option>
                           </select>
                         </div>
                         {Array.from({ length: numberOfClones }).map((_, index) => (
