@@ -10,7 +10,7 @@ import Quarto from '../../../public/images/quarto.png'
 const Card = ({ house }) => {
   return (
     <div onClick={() => window.open(house.link, '_blank')} className={styles.card}>
-      <Image className={styles.casa} src={house.imagem} alt="Imoveis" width={680} height={350}/>
+      <Image className={styles.casa} src={house.imagem} alt="Imoveis" width={500} height={350}/>
       <h2>{house.titulo}</h2>
       <div className={styles.caracteristicas}>
         <div className={styles.divIcon}>
